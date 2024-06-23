@@ -11,8 +11,8 @@ function App() {
  return (
    <div>
      <ReactKeycloakProvider authClient={keycloak}>
-       <Nav />
        <BrowserRouter>
+       <Nav />
          <Routes>
            <Route path="/" element={<WelcomePage />} />
            <Route
