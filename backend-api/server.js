@@ -3,6 +3,7 @@ const session = require('express-session');
 const Keycloak = require('keycloak-connect');
 const { Sequelize, DataTypes } = require('sequelize');
 
+const config = require('./keycloak.json');
 const app = express();
 const memoryStore = new session.MemoryStore();
 
@@ -25,21 +26,15 @@ const User = sequelize.define('User', {
 });
 
 app.use(session({
-    secret: 'mySecret',
+    secret: 'secret',
     resave: false,
     saveUninitialized: true,
     store: memoryStore
 }));
 
 const keycloak = new Keycloak({
-    clientId: 'backend-api',
-    bearerOnly: true,
-    serverUrl: 'http://localhost:8080/auth',
-    realm: 'myrealm',
-    credentials: {
-        secret: process.env.KEYCLOAK_CLIENT_SECRET
-    }
-});
+    store: memoryStore
+}, config);
 
 app.use(keycloak.middleware());
 
@@ -55,7 +50,7 @@ app.get('/admin', keycloak.protect('realm:admin'), (req, res) => {
     res.json({ message: 'This is an admin endpoint' });
 });
 
-app.listen(3001, async () => {
+app.listen("3001", async () => {
     await sequelize.sync();
     console.log('Server is running on port 3001');
 });

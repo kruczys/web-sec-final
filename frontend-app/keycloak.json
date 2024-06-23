@@ -1,0 +1,5 @@
+{
+    "realm": "main",
+    "url": "http://localhost:8080/",
+    "clientId": "frontend"
+  }

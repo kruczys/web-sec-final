@@ -15,41 +15,38 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-    command: start-dev --hostname-strict=false --proxy=edge
+    command: start-dev
     depends_on:
       - postgres
     volumes:
       - keycloak_data:/opt/keycloak/data
 
-#  backend:
-#    build: ./backend-api
-#    ports:
-#      - "3001:3001"
-#    environment:
-#      KEYCLOAK_URL: http://keycloak:8080/auth
-#      KEYCLOAK_REALM: your-realm
-#      KEYCLOAK_CLIENT_ID: backend-api
-#      KEYCLOAK_CLIENT_SECRET: your-client-secret
-#      POSTGRES_USER: user
-#      POSTGRES_PASSWORD: password
-#      POSTGRES_DB: backend
-#      POSTGRES_HOST: postgres
-#    depends_on:
-#      - keycloak
-#      - postgres
-#    volumes:
-#      - ./backend-api/data:/app/data
-#
-#  frontend:
-#    build: ./frontend-app
-#    ports:
-#      - "3000:3000"
-#    environment:
-#      REACT_APP_KEYCLOAK_URL: http://keycloak:8080/auth
-#      REACT_APP_KEYCLOAK_REALM: your-realm
-#      REACT_APP_KEYCLOAK_CLIENT_ID: frontend-app
-#    depends_on:
-#      - keycloak
+  backend:
+    build: ./backend-api
+    ports:
+      - "3001:3001"
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080/
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+      POSTGRES_DB: keycloak
+      POSTGRES_HOST: postgres
+    depends_on:
+      - keycloak
+      - postgres
+    volumes:
+      - ./backend-api/data:/app/data
+
+  frontend:
+    build: ./frontend-app
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_KEYCLOAK_URL: http://keycloak:8080/
+      REACT_APP_KEYCLOAK_REALM: main
+      REACT_APP_KEYCLOAK_CLIENT_ID: frontend
+    depends_on:
+      - keycloak
 
 volumes:
   postgres_data:

@@ -1,24 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import keycloak from './keycloak';
+import Keycloak from 'keycloak-js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 
-const eventLogger = (event, error) => {
-    console.log('onKeycloakEvent', event, error);
+const keycloakConfig = {
+  url: 'http://localhost:8080/',
+  realm: 'main',
+  clientId: 'frontend',
 };
 
-const tokenLogger = (tokens) => {
-    console.log('onKeycloakTokens', tokens);
-};
+const keycloak = new Keycloak(keycloakConfig);
 
-ReactDOM.render(
-    <ReactKeycloakProvider
-        authClient={keycloak}
-        onEvent={eventLogger}
-        onTokens={tokenLogger}
-    >
-        <App />
-    </ReactKeycloakProvider>,
-    document.getElementById('root')
+const App = () => (
+  <ReactKeycloakProvider authClient={keycloak}>
+    <App />
+  </ReactKeycloakProvider>
 );
+
+export default App;

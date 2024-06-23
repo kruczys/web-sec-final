@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:latest
 
 WORKDIR /app
 
@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 3001
 
+# CMD ["ls", "-la"]
 CMD ["node", "server.js"]
