@@ -1,27 +1,33 @@
-import React from 'react';
-import { useKeycloak } from '@react-keycloak/web';
+import React from "react";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "./keycloak";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Nav from "./components/Nav";
+import WelcomePage from "./pages/Homepage";
+import SecuredPage from "./pages/Securedpage";
+import PrivateRoute from "./helpers/PrivateRoute";
 
-const App = () => {
-    const { keycloak, initialized } = useKeycloak();
-
-    if (!initialized) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <div>
-            {!keycloak.authenticated && (
-                <button onClick={() => keycloak.login()}>Login</button>
-            )}
-
-            {keycloak.authenticated && (
-                <div>
-                    <button onClick={() => keycloak.logout()}>Logout</button>
-                    <div>Welcome, {keycloak.tokenParsed.preferred_username}</div>
-                </div>
-            )}
-        </div>
-    );
-};
+function App() {
+ return (
+   <div>
+     <ReactKeycloakProvider authClient={keycloak}>
+       <Nav />
+       <BrowserRouter>
+         <Routes>
+           <Route path="/" element={<WelcomePage />} />
+           <Route
+             path="/secured"
+             element={
+               <PrivateRoute>
+                 <SecuredPage />
+               </PrivateRoute>
+             }
+           />
+         </Routes>
+       </BrowserRouter>
+     </ReactKeycloakProvider>
+   </div>
+ );
+}
 
 export default App;

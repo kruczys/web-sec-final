@@ -10,5 +10,4 @@ COPY . .
 
 EXPOSE 3001
 
-# CMD ["ls", "-la"]
 CMD ["node", "server.js"]
