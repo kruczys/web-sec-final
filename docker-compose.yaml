@@ -7,6 +7,8 @@ services:
       POSTGRES_DB: keycloak
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
@@ -20,13 +22,15 @@ services:
       - postgres
     volumes:
       - keycloak_data:/opt/keycloak/data
+    networks:
+      - app_network
 
   backend:
     build: ./backend-api
     ports:
       - "3001:3001"
     environment:
-      KEYCLOAK_URL: http://keycloak:8080/
+      KEYCLOAK_URL: http://localhost:8080/
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: keycloak
       POSTGRES_DB: keycloak
@@ -36,18 +40,26 @@ services:
       - postgres
     volumes:
       - ./backend-api/data:/app/data
+    networks:
+      - app_network
 
   frontend:
     build: ./frontend-app
     ports:
       - "3000:3000"
     environment:
-      REACT_APP_KEYCLOAK_URL: http://keycloak:8080/
+      REACT_APP_KEYCLOAK_URL: http://localhost:8080/
       REACT_APP_KEYCLOAK_REALM: main
       REACT_APP_KEYCLOAK_CLIENT_ID: frontend
     depends_on:
       - keycloak
+    networks:
+      - app_network
 
 volumes:
   postgres_data:
   keycloak_data:
+
+networks:
+  app_network:
+    driver: bridge

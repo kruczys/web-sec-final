@@ -5,7 +5,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
 import WelcomePage from "./pages/Homepage";
 import SecuredPage from "./pages/Securedpage";
+import MooviesPage from "./pages/MooviesPage";
 import PrivateRoute from "./helpers/PrivateRoute";
+
 
 function App() {
  return (
@@ -23,6 +25,7 @@ function App() {
                </PrivateRoute>
              }
            />
+           <Route path="/public" element={<MooviesPage />} />
          </Routes>
        </BrowserRouter>
      </ReactKeycloakProvider>

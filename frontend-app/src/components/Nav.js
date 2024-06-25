@@ -11,7 +11,7 @@ const Nav = () => {
         <nav className="flex justify-between bg-gray-200 text-blue-800 w-screen">
           <div className="px-5 xl:px-12 py-6 flex w-full items-center">
             <h1 className="text-3xl font-bold font-heading">
-              Keycloak React AUTH.
+              MoovieRater
             </h1>
             <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
               <li>
@@ -19,9 +19,16 @@ const Nav = () => {
                   Home
                 </Link>
               </li>
+              {keycloak.authenticated && (
+                <li>
+                  <Link to="/secured" className="hover:text-blue-800">
+                    Account Info
+                   </Link>
+                </li>
+              )}
               <li>
-                <Link to="/secured" className="hover:text-blue-800">
-                  Secured Page
+                <Link to="/public" className="hover:text-blue-800">
+                  Moovies Page
                 </Link>
               </li>
             </ul>

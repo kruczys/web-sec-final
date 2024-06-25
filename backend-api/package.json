@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.18.0",
     "keycloak-connect": "25.0.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5",
-    "express-session": "^1.18.0"
+    "sequelize": "^6.3.5"
   }
 }

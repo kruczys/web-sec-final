@@ -8,7 +8,5 @@
       "secret": "WPXVM3gLgt0Fn0uvnbpBRiblThveJLnF"
     },
     "confidential-port": 0,
-    "policy-enforcer": {
-      "credentials": {}
-    }
+    "policy-enforcer": {}
   }
